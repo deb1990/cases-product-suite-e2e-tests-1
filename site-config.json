@@ -1,0 +1,5 @@
+{
+  "url": "http://local.site/",
+  "drush_alias": "",
+  "root": "/var/www/site"
+}
