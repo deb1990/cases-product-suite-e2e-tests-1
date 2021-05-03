@@ -2,9 +2,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
 import { chromium, ChromiumBrowser, ChromiumBrowserContext, Cookie, Page } from 'playwright';
-import ConfigFile from './../../src/interfaces/config-file.interface';
-import Configs from '././configs';
-import UserRole from './../role/user-role.service';
+import ConfigFile from '../interfaces/config-file.interface';
+import Configs from './configs';
+import UserRole from '../role/user-role.service';
 
 /**
  * Browser Service Class

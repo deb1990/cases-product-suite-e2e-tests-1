@@ -1,7 +1,7 @@
 import { execSync } from 'child_process';
 import Configs from './configs';
-import CiviApiResponse from './../interfaces/civi-response.interface';
-import UserRole from './../role/user-role.service';
+import CiviApiResponse from '../interfaces/civi-response.interface';
+import UserRole from '../role/user-role.service';
 
 export default cvApi;
 /**

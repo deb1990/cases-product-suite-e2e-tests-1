@@ -1,5 +1,5 @@
 import { Page } from 'playwright';
-import BrowserService from '../../src/utils/browser.service';
+import BrowserService from '../../src/services/utils/browser.service';
 import { ManageProspects } from '../../src/pages/prospect/manage-prospects.page';
 
 describe('Manage Prospects', function () {

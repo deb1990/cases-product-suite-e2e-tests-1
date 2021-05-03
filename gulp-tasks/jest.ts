@@ -1,6 +1,6 @@
 import * as jest from 'jest-cli';
-import ConfigService from '../src/utils/configs';
-import BrowserService from './../src/utils/browser.service';
+import ConfigService from '../src/services/utils/configs';
+import BrowserService from '../src/services/utils/browser.service';
 
 export default jestTask;
 

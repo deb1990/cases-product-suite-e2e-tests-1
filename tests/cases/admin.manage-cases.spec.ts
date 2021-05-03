@@ -1,5 +1,5 @@
 import { Page } from 'playwright';
-import BrowserService from '../../src/utils/browser.service';
+import BrowserService from '../../src/services/utils/browser.service';
 import { ManageCases } from '../../src/pages/cases/manage-case.page';
 
 describe('Manage Cases: As Admin User', function () {

@@ -1,5 +1,5 @@
 import { Page } from 'playwright';
-import BrowserService from '../../src/utils/browser.service';
+import BrowserService from '../../src/services/utils/browser.service';
 import { ManageApplications } from '../../src/pages/awards/manage-applications.page';
 
 describe('Manage Applications', function () {

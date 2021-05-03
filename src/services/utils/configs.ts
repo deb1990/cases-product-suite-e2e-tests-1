@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import throwError from './throw-error';
 import ConfigFile from '../interfaces/config-file.interface';
-import UserRole from './../role/user-role.service';
+import UserRole from '../role/user-role.service';
 import * as path from 'path';
 
 export default {

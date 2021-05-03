@@ -1,7 +1,7 @@
 import { Page, Response } from 'playwright';
-import BrowserService from '../../utils/browser.service';
-import Configs from '../../utils/configs';
-import CiviApiService from '../../utils/cv-api.service';
+import BrowserService from '../../services/utils/browser.service';
+import Configs from '../../services/utils/configs';
+import CiviApiService from '../../services/utils/cv-api.service';
 
 /**
  * Manage Entity Page

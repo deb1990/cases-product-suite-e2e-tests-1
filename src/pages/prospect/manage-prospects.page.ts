@@ -1,4 +1,4 @@
-import BrowserService from '../../utils/browser.service';
+import BrowserService from '../../services/utils/browser.service';
 import { ManageEntity } from '../base/manage-entity.page';
 
 /**
