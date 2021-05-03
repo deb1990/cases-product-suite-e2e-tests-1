@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import throwError from './throw-error';
+import throwError from './throw-error.service';
 import ConfigFile from '../interfaces/config-file.interface';
 import UserRole from '../role/user-role.service';
 import * as path from 'path';
