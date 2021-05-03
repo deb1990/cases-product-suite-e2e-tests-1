@@ -4,6 +4,9 @@ import BrowserService from './../src/utils/browser.service';
 
 export default jestTask;
 
+/**
+ * @returns {Promise<void>} promise
+ */
 async function jestTask (): Promise<void> {
   ConfigService.touchSiteConfigFile();
   const browser = new BrowserService();

@@ -1,5 +1,5 @@
 {
   "*.ts": [
-    "eslint --max-warnings=0"
+    "npx eslint --max-warnings=0 . -c .eslintrc.js"
   ]
 }

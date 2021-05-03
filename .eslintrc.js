@@ -9,12 +9,12 @@ module.exports = {
     }
   },
   rules: {
-    "@typescript-eslint/semi": ["error", "always"],
+    '@typescript-eslint/semi': ['error', 'always'],
     'jsdoc/require-jsdoc': [1, {
       contexts: [
         'ClassDeclaration', 'FunctionExpression', 'FunctionDeclaration',
         'ArrowFunctionExpression', 'MethodDefinition', 'ClassExpression',
-        'FunctionExpression', 'TSInterfaceDeclaration','TSMethodSignature'
+        'FunctionExpression', 'TSInterfaceDeclaration', 'TSMethodSignature'
       ]
     }]
   }
