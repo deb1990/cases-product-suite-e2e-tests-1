@@ -7,12 +7,21 @@ export default {
   cookieDir: './cookies/',
   siteConfig: 'site-config.json',
   siteConfigSample: 'site-config.json.sample',
+  /**
+   * @returns {ConfigFile} config file
+   */
   getSiteConfig (): ConfigFile {
     return JSON.parse(fs.readFileSync(this.siteConfig).toString());
   },
+  /**
+   * @returns {string} cookie path
+   */
   getCookiePath (): string {
     return path.join(this.cookieDir, 'admin.json');
   },
+  /**
+   * Creates the config file if not present.
+   */
   touchSiteConfigFile (): void {
     try {
       fs.readFileSync(this.siteConfig);
