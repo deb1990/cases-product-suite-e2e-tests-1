@@ -2,7 +2,7 @@ import { Page } from 'playwright';
 import BrowserService from '../../src/utils/browser.service';
 import { ManageCases } from '../../src/pages/cases/manage-case.page';
 
-describe('Manage Cases', function () {
+describe('Manage Cases: As Admin User', function () {
   let page: Page;
   let manageCases: ManageCases;
   const browser = new BrowserService();
