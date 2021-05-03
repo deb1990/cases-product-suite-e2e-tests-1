@@ -1,8 +1,7 @@
 import { execSync } from 'child_process';
 import Configs from './configs';
 import CiviApiResponse from './../interfaces/civi-response.interface';
-
-const LOGGED_IN_USER_NAME = 'admin';
+import UserRole from './../role/user-role.service';
 
 export default cvApi;
 /**
@@ -29,7 +28,7 @@ function cvApi (entityName: string, action: string, queryData: object): CiviApiR
  */
 function cvApiBatch (queriesData: Array<[string, string, object]>): any[] {
   const config = Configs.getSiteConfig();
-  const cmd = `echo '${JSON.stringify(queriesData)}' | cv api:batch -U ${LOGGED_IN_USER_NAME}`;
+  const cmd = `echo '${JSON.stringify(queriesData)}' | cv api:batch -U ${UserRole.getRoleName('admin')}`;
   const responses = JSON.parse(execSync(jsonEscape(cmd), { cwd: config.root }).toString());
   checkAndThrowApiResponseErrors(responses);
 

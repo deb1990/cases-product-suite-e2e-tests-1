@@ -27,7 +27,7 @@ describe('Manage Applications', function () {
 
   describe('on navigate', function () {
     beforeEach(async () => {
-      await browser.loadCookies();
+      await browser.loadCookiesFor('admin');
       await manageApplications.navigate(page);
       await manageApplications.waitForPageLoad(page);
     });

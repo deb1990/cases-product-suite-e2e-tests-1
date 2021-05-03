@@ -4,6 +4,7 @@ import { execSync } from 'child_process';
 import { chromium, ChromiumBrowser, ChromiumBrowserContext, Cookie, Page } from 'playwright';
 import ConfigFile from './../../src/interfaces/config-file.interface';
 import Configs from '././configs';
+import UserRole from './../role/user-role.service';
 
 /**
  * Browser Service Class
@@ -54,34 +55,35 @@ export default class BrowserService {
    * @returns {Promise<void>}
    */
   async writeCookies (): Promise<void> {
-    const LOGGED_IN_USER_NAME = 'admin';
+    for (const roleName of UserRole.getAllRoles()) {
+      const cookieFilePath = path.join(Configs.cookieDir, `${UserRole.getCookieFileName(roleName)}`);
+      const config: ConfigFile = Configs.getSiteConfig();
+      const command = `drush ${config.drush_alias} uli --name=${UserRole.getRoleName(roleName)} --uri=${config.url} --browser=0`;
+      const loginUrl = execSync(command, { encoding: 'utf8', cwd: config.root });
 
-    const cookieFilePath = path.join(Configs.cookieDir, 'admin.json');
-    const config: ConfigFile = Configs.getSiteConfig();
-    const command = `drush ${config.drush_alias} uli --name=${LOGGED_IN_USER_NAME} --uri=${config.url} --browser=0`;
-    const loginUrl = execSync(command, { encoding: 'utf8', cwd: config.root });
+      await this.launchChrome();
+      const page = await this.newPage();
+      await page.goto(loginUrl);
 
-    await this.launchChrome();
-    const page = await this.newPage();
-    await page.goto(loginUrl);
+      const cookies = await this.context.cookies();
+      await this.close();
 
-    const cookies = await this.context.cookies();
-    await this.close();
+      !fs.existsSync(Configs.cookieDir) && fs.mkdirSync(Configs.cookieDir);
+      fs.existsSync(cookieFilePath) && fs.unlinkSync(cookieFilePath);
 
-    !fs.existsSync(Configs.cookieDir) && fs.mkdirSync(Configs.cookieDir);
-    fs.existsSync(cookieFilePath) && fs.unlinkSync(cookieFilePath);
-
-    fs.writeFileSync(cookieFilePath, JSON.stringify(cookies));
+      fs.writeFileSync(cookieFilePath, JSON.stringify(cookies));
+    }
   }
 
   /**
    * Loads the saved cookies into the browser context.
    *
+   * @param {string} roleName role name
    * @returns {Promise<void>}
    */
-  async loadCookies (): Promise<void> {
+  async loadCookiesFor (roleName: string): Promise<void> {
     let cookies: Cookie[] = [];
-    const cookiePath = Configs.getCookiePath();
+    const cookiePath = Configs.getCookiePathFor(roleName);
 
     // READ COOKIES FROM FILE IF EXISTS
     if (fs.existsSync(cookiePath)) {

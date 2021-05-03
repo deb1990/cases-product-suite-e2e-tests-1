@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import throwError from './throw-error';
 import ConfigFile from '../interfaces/config-file.interface';
+import UserRole from './../role/user-role.service';
 import * as path from 'path';
 
 export default {
@@ -14,10 +15,11 @@ export default {
     return JSON.parse(fs.readFileSync(this.siteConfig).toString());
   },
   /**
+   * @param {string} roleName role name
    * @returns {string} cookie path
    */
-  getCookiePath (): string {
-    return path.join(this.cookieDir, 'admin.json');
+  getCookiePathFor (roleName: string): string {
+    return path.join(this.cookieDir, UserRole.getCookieFileName(roleName));
   },
   /**
    * Creates the config file if not present.

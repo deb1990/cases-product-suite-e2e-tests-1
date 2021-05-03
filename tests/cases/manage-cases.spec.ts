@@ -27,7 +27,7 @@ describe('Manage Cases', function () {
 
   describe('on navigate', function () {
     beforeEach(async () => {
-      await browser.loadCookies();
+      await browser.loadCookiesFor('admin');
       await manageCases.navigate(page);
       await manageCases.waitForPageLoad(page);
     });

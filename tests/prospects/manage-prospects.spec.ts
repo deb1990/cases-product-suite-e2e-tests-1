@@ -27,7 +27,7 @@ describe('Manage Prospects', function () {
 
   describe('on navigate', function () {
     beforeEach(async () => {
-      await browser.loadCookies();
+      await browser.loadCookiesFor('admin');
       await manageProspects.navigate(page);
       await manageProspects.waitForPageLoad(page);
     });
