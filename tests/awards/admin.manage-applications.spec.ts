@@ -1,6 +1,7 @@
 import { Page } from 'playwright';
 import BrowserService from '../../src/services/utils/browser.service';
 import { ManageApplications } from '../../src/pages/awards/manage-applications.page';
+import DatabaseService from '../../src/services/data/database.service';
 
 describe('Manage Applications', function () {
   let page: Page;
@@ -16,6 +17,7 @@ describe('Manage Applications', function () {
   });
 
   beforeEach(async () => {
+    await DatabaseService.startTransaction();
     page = await browser.newPage();
 
     manageApplications = new ManageApplications(browser);
@@ -23,6 +25,7 @@ describe('Manage Applications', function () {
 
   afterEach(async () => {
     await page.close();
+    await DatabaseService.rollbackTransaction();
   });
 
   describe('on navigate', function () {

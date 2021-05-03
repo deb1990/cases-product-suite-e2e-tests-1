@@ -1,6 +1,7 @@
 import { Page } from 'playwright';
 import BrowserService from '../../src/services/utils/browser.service';
 import { ManageCases } from '../../src/pages/cases/manage-case.page';
+import DatabaseService from '../../src/services/data/database.service';
 
 describe('Manage Cases: As Admin User', function () {
   let page: Page;
@@ -16,6 +17,7 @@ describe('Manage Cases: As Admin User', function () {
   });
 
   beforeEach(async () => {
+    await DatabaseService.startTransaction();
     page = await browser.newPage();
 
     manageCases = new ManageCases(browser);
@@ -23,6 +25,7 @@ describe('Manage Cases: As Admin User', function () {
 
   afterEach(async () => {
     await page.close();
+    await DatabaseService.rollbackTransaction();
   });
 
   describe('on navigate', function () {
