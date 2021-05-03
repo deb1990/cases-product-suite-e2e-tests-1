@@ -1,6 +1,6 @@
 import { Page } from 'playwright';
 import BrowserService from '../../src/utils/browser.service';
-import { ManageCases } from '../../src/pages/civicase/manage-cases.page';
+import { ManageCases } from '../../src/pages/cases/manage-case.page';
 
 describe('Manage Cases', function () {
   let page: Page;
@@ -29,10 +29,11 @@ describe('Manage Cases', function () {
     beforeEach(async () => {
       await browser.loadCookies();
       await manageCases.navigate(page);
+      await manageCases.waitForPageLoad(page);
     });
 
     it('should show manage cases page title', async () => {
-      expect(await page.title()).toBe(manageCases.pageTitle);
+      expect(await page.title()).toBe(manageCases.getPageTitle());
     });
   });
 });
