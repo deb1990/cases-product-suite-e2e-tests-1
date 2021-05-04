@@ -1,7 +1,7 @@
 import { Page, Response } from 'playwright';
 import BrowserService from '../../services/utils/browser.service';
 import Configs from '../../services/utils/configs';
-import CiviApiService from '../../services/utils/cv-api.service';
+import cvApiBatch from '../../services/utils/cv-api.service';
 
 /**
  * Manage Entity Page
@@ -42,11 +42,11 @@ export abstract class ManageEntity {
    */
   private getCaseTypeCategoryValue (): number {
     // implement a caching service
-    const caseTypeCategoryValue = CiviApiService('OptionValue', 'get', {
+    const caseTypeCategoryValue = cvApiBatch([['OptionValue', 'get', {
       sequential: 1,
       option_group_id: 'case_type_categories',
       name: this.caseTypeCategory
-    }).values[0].value;
+    }]])[0].values[0].value;
 
     return caseTypeCategoryValue;
   }

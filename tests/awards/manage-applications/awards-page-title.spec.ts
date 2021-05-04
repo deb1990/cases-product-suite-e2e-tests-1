@@ -1,9 +1,8 @@
 import { Page } from 'playwright';
-import BrowserService from '../../src/services/utils/browser.service';
-import { ManageApplications } from '../../src/pages/awards/manage-applications.page';
-import DatabaseService from '../../src/services/data/database.service';
+import BrowserService from '../../../src/services/utils/browser.service';
+import { ManageApplications } from '../../../src/pages/awards/manage-applications.page';
 
-describe('Manage Applications', function () {
+describe('Award Page Title', function () {
   let page: Page;
   let manageApplications: ManageApplications;
   const browser = new BrowserService();
@@ -17,7 +16,6 @@ describe('Manage Applications', function () {
   });
 
   beforeEach(async () => {
-    await DatabaseService.startTransaction();
     page = await browser.newPage();
 
     manageApplications = new ManageApplications(browser);
@@ -25,18 +23,28 @@ describe('Manage Applications', function () {
 
   afterEach(async () => {
     await page.close();
-    await DatabaseService.rollbackTransaction();
   });
 
-  describe('on navigate', function () {
+  describe('as admin user', function () {
     beforeEach(async () => {
-      await browser.loadCookiesFor('admin');
+      await browser.loginUsingCookiesAs('admin');
       await manageApplications.navigate(page);
       await manageApplications.waitForPageLoad(page);
     });
 
     it('should show manage applications page title', async () => {
       expect(await page.title()).toBe(manageApplications.getPageTitle());
+    });
+  });
+
+  describe('as case user', function () {
+    beforeEach(async () => {
+      await browser.loginUsingCookiesAs('case_user');
+      await manageApplications.navigate(page);
+    });
+
+    it('should not have access to manage applications page', async () => {
+      expect(await page.title()).not.toBe(manageApplications.getPageTitle());
     });
   });
 });

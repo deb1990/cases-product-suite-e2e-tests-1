@@ -81,7 +81,7 @@ export default class BrowserService {
    * @param {string} roleName role name
    * @returns {Promise<void>}
    */
-  async loadCookiesFor (roleName: string): Promise<void> {
+  async loginUsingCookiesAs (roleName: string): Promise<void> {
     let cookies: Cookie[] = [];
     const cookiePath = Configs.getCookiePathFor(roleName);
 

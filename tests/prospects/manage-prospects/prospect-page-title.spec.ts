@@ -1,9 +1,8 @@
 import { Page } from 'playwright';
-import BrowserService from '../../src/services/utils/browser.service';
-import { ManageProspects } from '../../src/pages/prospect/manage-prospects.page';
-import DatabaseService from '../../src/services/data/database.service';
+import BrowserService from '../../../src/services/utils/browser.service';
+import { ManageProspects } from '../../../src/pages/prospect/manage-prospects.page';
 
-describe('Manage Prospects', function () {
+describe('Prospect Page Title', function () {
   let page: Page;
   let manageProspects: ManageProspects;
   const browser = new BrowserService();
@@ -17,7 +16,6 @@ describe('Manage Prospects', function () {
   });
 
   beforeEach(async () => {
-    await DatabaseService.startTransaction();
     page = await browser.newPage();
 
     manageProspects = new ManageProspects(browser);
@@ -25,12 +23,11 @@ describe('Manage Prospects', function () {
 
   afterEach(async () => {
     await page.close();
-    await DatabaseService.rollbackTransaction();
   });
 
-  describe('on navigate', function () {
+  describe('as admin user', function () {
     beforeEach(async () => {
-      await browser.loadCookiesFor('admin');
+      await browser.loginUsingCookiesAs('admin');
       await manageProspects.navigate(page);
       await manageProspects.waitForPageLoad(page);
     });

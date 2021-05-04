@@ -3,21 +3,7 @@ import Configs from './configs';
 import CiviApiResponse from '../interfaces/civi-response.interface';
 import UserRole from '../role/user-role.service';
 
-export default cvApi;
-/**
- * Executes a single call to the `cv api` service and returns the response
- * in JSON format.
- *
- * @param {string} entityName the name of the entity to run the query on.
- * @param {string} action the entity action.
- * @param {object} queryData the data to pass to the entity action.
- * @returns {CiviApiResponse} the result from the entity action call.
- */
-function cvApi (entityName: string, action: string, queryData: object): CiviApiResponse {
-  const queryResponse = cvApiBatch([[entityName, action, queryData]]);
-
-  return queryResponse[0];
-}
+export default cvApiBatch;
 
 /**
  * Executes multi calls to the `cv api` service and returns the response from
@@ -26,7 +12,7 @@ function cvApi (entityName: string, action: string, queryData: object): CiviApiR
  * @param {Array<[string, string, object]>} queriesData a list of queries to pass to the `cv api:batch` service.
  * @returns {any[]} response from the cv api.
  */
-function cvApiBatch (queriesData: Array<[string, string, object]>): any[] {
+function cvApiBatch (queriesData: Array<[string, string, object]>): CiviApiResponse[] {
   const config = Configs.getSiteConfig();
   const cmd = `echo '${JSON.stringify(queriesData)}' | cv api:batch -U ${UserRole.getRoleName('admin')}`;
   const responses = JSON.parse(execSync(jsonEscape(cmd), { cwd: config.root }).toString());
