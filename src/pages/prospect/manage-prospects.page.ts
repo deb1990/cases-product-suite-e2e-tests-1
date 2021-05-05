@@ -1,10 +1,10 @@
 import BrowserService from '../../services/utils/browser.service';
-import { ManageEntity } from '../base/manage-entity.page';
+import { ManageCasetypecategoryList } from '../base/manage-casetypecategory-list.page';
 
 /**
  * Manage Prospects Page
  */
-export class ManageProspects extends ManageEntity {
+export class ManageProspects extends ManageCasetypecategoryList {
   caseTypeCategory = 'Prospecting';
 
   /**

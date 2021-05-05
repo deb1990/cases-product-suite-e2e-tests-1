@@ -2,18 +2,19 @@ import { Page, Response } from 'playwright';
 import BrowserService from '../../services/utils/browser.service';
 import Configs from '../../services/utils/configs';
 import cvApiBatch from '../../services/utils/cv-api.service';
+import BasePage from './base.page';
 
 /**
  * Manage Entity Page
  */
-export abstract class ManageEntity {
+export abstract class ManageCasetypecategoryList extends BasePage {
   caseTypeCategory = 'cases';
 
   /**
    * @param {BrowserService} browser browser object
    */
   constructor (public browser: BrowserService) {
-    this.browser = browser;
+    super(browser);
   }
 
   /**
@@ -54,7 +55,7 @@ export abstract class ManageEntity {
   /**
    * @returns {string} page title
    */
-  private getPageUrl (): string {
+  getPageUrl (): string {
     return `/civicrm/case/a/?case_type_category=${this.getCaseTypeCategoryValue()}#/case/list?cf=%7B%22case_type_category%22:%22${this.getCaseTypeCategoryValue()}%22%7D`;
   }
 }

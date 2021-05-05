@@ -1,10 +1,10 @@
 import BrowserService from '../../services/utils/browser.service';
-import { ManageEntity } from '../base/manage-entity.page';
+import { ManageCasetypecategoryList } from '../base/manage-casetypecategory-list.page';
 
 /**
  * Manage Applications Page
  */
-export class ManageApplications extends ManageEntity {
+export class ManageApplications extends ManageCasetypecategoryList {
   caseTypeCategory = 'awards';
 
   /**

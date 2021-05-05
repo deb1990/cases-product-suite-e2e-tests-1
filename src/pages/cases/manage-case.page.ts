@@ -1,10 +1,10 @@
 import BrowserService from '../../services/utils/browser.service';
-import { ManageEntity } from '../base/manage-entity.page';
+import { ManageCasetypecategoryList } from '../base/manage-casetypecategory-list.page';
 
 /**
  * Manage Cases Page
  */
-export class ManageCases extends ManageEntity {
+export class ManageCases extends ManageCasetypecategoryList {
   /**
    * @param {BrowserService} browser browser object
    */
