@@ -55,10 +55,10 @@ export default class BrowserService {
    * @returns {Promise<void>}
    */
   async writeCookies (): Promise<void> {
-    for (const roleName of UserRole.getAllRoles()) {
-      const cookieFilePath = path.join(Configs.cookieDir, `${UserRole.getCookieFileName(roleName)}`);
+    for (const roleObj of UserRole.getAllRoles()) {
+      const cookieFilePath = path.join(Configs.cookieDir, `${UserRole.getCookieFileName(roleObj.name)}`);
       const config: ConfigFile = Configs.getSiteConfig();
-      const command = `drush ${config.drush_alias} uli --name=${UserRole.getRoleName(roleName)} --uri=${config.url} --browser=0`;
+      const command = `drush ${config.drush_alias} uli --name=${UserRole.getRoleName(roleObj.name)} --uri=${config.url} --browser=0`;
       const loginUrl = execSync(command, { encoding: 'utf8', cwd: config.root });
 
       await this.launchChrome();
