@@ -12,5 +12,5 @@ async function jestTask (): Promise<void> {
   const browser = new BrowserService();
 
   await browser.writeCookies();
-  await jest.run();
+  await jest.run(['--runInBand']);
 }
