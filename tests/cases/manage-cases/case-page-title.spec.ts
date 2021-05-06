@@ -26,7 +26,7 @@ describe('Case Page Title', function () {
   });
 
   afterEach(async () => {
-    await page.close();
+    await browser.takeScreenshotWhenFailedAndClose(page);
     CaseType.cleanUp();
   });
 

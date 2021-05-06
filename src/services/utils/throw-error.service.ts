@@ -1,5 +1,5 @@
-import * as colors from 'ansi-colors';
-import * as PluginError from 'plugin-error';
+import colors from 'ansi-colors';
+import PluginError from 'plugin-error';
 
 /**
  * Throw Error.

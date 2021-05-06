@@ -6,11 +6,14 @@ const config: Config.InitialOptions = {
   transform: {
     '^.+\\.ts$': 'ts-jest'
   },
+  testRunner: 'jest-circus/runner',
+  testEnvironment: './src/environments/e2e-test-environment.js',
   reporters: [
     'default',
     ['./node_modules/jest-html-reporter', {
       pageTitle: 'Cases Product Suite E2E Test Report',
-      includeFailureMsg: true
+      includeFailureMsg: true,
+      outputPath: './test-report/test-report.html'
     }]
   ]
 };

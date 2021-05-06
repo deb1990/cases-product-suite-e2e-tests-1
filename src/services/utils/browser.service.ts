@@ -6,6 +6,11 @@ import ConfigFile from '../interfaces/config-file.interface';
 import Configs from './configs';
 import UserRole from '../role/user-role.service';
 
+declare const global: {
+  hasTestFailures: boolean
+  failureScreenshotFileName: string
+};
+
 /**
  * Browser Service Class
  */
@@ -115,5 +120,18 @@ export default class BrowserService {
     context: ChromiumBrowserContext,
     cookies: Cookie[]): Promise<void> {
     return await context.addCookies(cookies);
+  }
+
+  /**
+   * @param {Page} page page object
+   */
+  public async takeScreenshotWhenFailedAndClose (page: Page): Promise<any> {
+    if (global.hasTestFailures) {
+      await page.screenshot({
+        path: `./test-report/${global.failureScreenshotFileName}.png`,
+        fullPage: true
+      });
+    }
+    await page.close();
   }
 }
