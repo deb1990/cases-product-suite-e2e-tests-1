@@ -10,6 +10,9 @@ import OptionValueService from '../../services/entities/option-value.service';
 export abstract class ManageCasetypecategoryList extends BasePage {
   caseTypeCategory = 'cases';
   OptionValue = new OptionValueService();
+  selectors = {
+    otherCriteriaButton: '.civicase__case-filter-panel__button'
+  };
 
   /**
    * @param {BrowserService} browser browser object
@@ -31,7 +34,7 @@ export abstract class ManageCasetypecategoryList extends BasePage {
    * @returns {Promise<any>} promise
    */
   async waitForPageLoad (page: Page): Promise<any> {
-    return await page.waitForSelector('.civicase__case-filter-panel__button');
+    return await page.waitForSelector(this.selectors.otherCriteriaButton);
   }
 
   /**

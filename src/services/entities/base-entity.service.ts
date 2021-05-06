@@ -30,8 +30,8 @@ export default abstract class BaseEntityService {
       return [this.entityName, 'create', param];
     });
 
-    const apiReturnValue = cvApiBatch(apiCalls).map((caseType) => {
-      return caseType.values[0];
+    const apiReturnValue = cvApiBatch(apiCalls).map((entity) => {
+      return entity.values[0];
     });
 
     this.entityIds = apiReturnValue.map((caseType) => {
