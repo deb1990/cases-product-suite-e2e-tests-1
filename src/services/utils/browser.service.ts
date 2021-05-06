@@ -109,11 +109,11 @@ export default class BrowserService {
    *
    * @param {ChromiumBrowserContext} context context object
    * @param {Cookie[]} cookies cookies array
-   * @returns {Promise<any>} promise
+   * @returns {Promise<void>} promise
    */
   private async setCookies (
     context: ChromiumBrowserContext,
-    cookies: Cookie[]): Promise<any> {
+    cookies: Cookie[]): Promise<void> {
     return await context.addCookies(cookies);
   }
 }

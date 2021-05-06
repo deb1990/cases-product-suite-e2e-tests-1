@@ -1,14 +1,15 @@
 import { Page, Response } from 'playwright';
 import BrowserService from '../../services/utils/browser.service';
 import Configs from '../../services/utils/configs';
-import cvApiBatch from '../../services/utils/cv-api.service';
 import BasePage from './base.page';
+import OptionValueService from '../../services/entities/option-value.service';
 
 /**
  * Manage Entity Page
  */
 export abstract class ManageCasetypecategoryList extends BasePage {
   caseTypeCategory = 'cases';
+  OptionValue = new OptionValueService();
 
   /**
    * @param {BrowserService} browser browser object
@@ -39,15 +40,14 @@ export abstract class ManageCasetypecategoryList extends BasePage {
   abstract getPageTitle (): string;
 
   /**
-   * @returns {number} case type category value
+   * @returns {string} case type category value
    */
-  private getCaseTypeCategoryValue (): number {
-    // implement a caching service
-    const caseTypeCategoryValue = cvApiBatch([['OptionValue', 'get', {
+  private getCaseTypeCategoryValue (): string {
+    const caseTypeCategoryValue = this.OptionValue.get({
       sequential: 1,
       option_group_id: 'case_type_categories',
       name: this.caseTypeCategory
-    }]])[0].values[0].value;
+    }, true)[0].value;
 
     return caseTypeCategoryValue;
   }

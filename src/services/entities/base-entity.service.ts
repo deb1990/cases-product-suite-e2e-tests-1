@@ -1,9 +1,12 @@
 import cvApiBatch from '../utils/cv-api.service';
+import CiviApiResponseValue from '../interfaces/civi-response-value.interface';
+import CiviApiParam from '../interfaces/civi-api-param.interface';
+import CiviApiQuery from '../interfaces/civi-api-query.interface';
 
 /**
  * Base Entity Service
  */
-export default class BaseEntityService {
+export default abstract class BaseEntityService {
   entityName: string;
   entityIds: string[];
 
@@ -17,13 +20,13 @@ export default class BaseEntityService {
   /**
    * Create Entity.
    *
-   * @param {any} params parameters
+   * @param {CiviApiQuery} params parameters
    * @returns {object[]} created entities
    */
-  create (params: any[]): object[] {
+  create (params: CiviApiParam[]): object[] {
     this.entityIds = [];
 
-    const apiCalls = params.map((param): [string, string, object] => {
+    const apiCalls = params.map((param: CiviApiParam): CiviApiQuery => {
       return [this.entityName, 'create', param];
     });
 
@@ -36,6 +39,17 @@ export default class BaseEntityService {
     });
 
     return apiReturnValue;
+  }
+
+  /**
+   * Get Option Values.
+   *
+   * @param {CiviApiParam[]} params parameters
+   * @param {boolean} useCache return values from cache if present
+   * @returns {CiviApiResponseValue[]} option values
+   */
+  get (params: CiviApiParam, useCache: boolean): CiviApiResponseValue[] {
+    return cvApiBatch([[this.entityName, 'get', params]], useCache)[0].values;
   }
 
   /**
