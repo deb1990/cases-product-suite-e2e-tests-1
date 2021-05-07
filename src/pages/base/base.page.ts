@@ -6,6 +6,8 @@ import Configs from '../../services/utils/configs';
  * Manage Entity Page
  */
 export default abstract class BasePage {
+  siteName: string = Configs.getSiteConfig().site_name;
+
   /**
    * @param {BrowserService} browser browser object
    */

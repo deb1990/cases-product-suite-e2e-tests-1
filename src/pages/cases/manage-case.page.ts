@@ -16,6 +16,6 @@ export class ManageCases extends ManageCasetypecategoryList {
    * @returns {string} page title
    */
   getPageTitle (): string {
-    return 'Manage Cases | CiviCase';
+    return `Manage Cases | ${this.siteName}`;
   }
 }

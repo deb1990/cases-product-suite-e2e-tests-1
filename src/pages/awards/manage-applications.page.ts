@@ -18,6 +18,6 @@ export class ManageApplications extends ManageCasetypecategoryList {
    * @returns {string} page title
    */
   getPageTitle (): string {
-    return 'Manage Applications | CiviCase';
+    return `Manage Applications | ${this.siteName}`;
   }
 }

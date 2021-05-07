@@ -11,41 +11,98 @@ jobs:
       SITE_FOLDER: site
       SITE_URL: http://localhost:7979
       CIVICRM_EXTENSIONS_DIR: web/sites/all/modules/civicrm/tools/extensions
+      DRUPAL_MODULES_DIR: web/sites/all/modules
       E2E_DIR: cases-product-suite-e2e-tests
       DRUPAL_THEME_DIR: web/sites/all/themes
+      SITE_NAME: drupal-clean
 
-    # services:
-    #   mysql:
-    #     image: mysql:5.7
-    #     env:
-    #       MYSQL_ROOT_PASSWORD: root
-    #     ports:
-    #     - 3306
-    #     options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+        - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
 
-      # - name: Config mysql database as per CiviCRM requirement
-      #   run: echo "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));" | mysql -u root --password=root --host=mysql
+      - name: Config mysql database as per CiviCRM requirement
+        run: echo "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));" | mysql -u root --password=root --host=mysql
 
-      # - name: Config amp
-      #   run : |
-      #     amp config:set --db_type=mysql_dsn --mysql_dsn='mysql://root:root@mysql:3306' --httpd_type=apache24 --httpd_restart_command='sudo /usr/sbin/apache2ctl graceful' --perm_type=worldWritable --hosts_type=file
-      #     echo "IncludeOptional $HOME/.amp/apache.d/*.conf" >> /etc/apache2/apache2.conf
-      #     /usr/sbin/apache2ctl restart
+      - name: Config amp
+        run : |
+          amp config:set --db_type=mysql_dsn --mysql_dsn='mysql://root:root@mysql:3306' --httpd_type=apache24 --httpd_restart_command='sudo /usr/sbin/apache2ctl graceful' --perm_type=worldWritable --hosts_type=file
+          echo "IncludeOptional $HOME/.amp/apache.d/*.conf" >> /etc/apache2/apache2.conf
+          /usr/sbin/apache2ctl restart
 
-      # - name: Build Drupal site
-      #   run: |
-      #     civibuild create drupal-clean --civi-ver  --cms-ver 7.74 --web-root $GITHUB_WORKSPACE/${{ env.SITE_FOLDER }} --url ${{ env.SITE_URL }}
-      #     chmod -R 777 $GITHUB_WORKSPACE/${{ env.SITE_FOLDER }}
+      - name: Install Missing Dependencies
+        run : |
+          sudo apt-get update
+          sudo apt-get install -y libxshmfence-dev
 
-      - uses: actions/checkout@v1
+      - name: Build Drupal site
+        run: |
+          civibuild create drupal-clean --civi-ver 5.35 --cms-ver 7.74 --web-root $GITHUB_WORKSPACE/${{ env.SITE_FOLDER }} --url ${{ env.SITE_URL }}
+          chmod -R 777 $GITHUB_WORKSPACE/${{ env.SITE_FOLDER }}
+
+      - name: Installing CiviCase, CiviAwards, CiviProspect and Shoreditch
+        working-directory: ${{ env.SITE_FOLDER }}/${{ env.CIVICRM_EXTENSIONS_DIR }}
+        run: |
+          git clone https://github.com/compucorp/uk.co.compucorp.civicase.git
+          git clone https://github.com/compucorp/uk.co.compucorp.civiawards.git
+          git clone https://github.com/compucorp/uk.co.compucorp.civicrm.prospect.git
+          git clone https://github.com/civicrm/org.civicrm.shoreditch.git
+          cv en shoreditch civicase civiawards prospect
+          drush en civicrmtheme -y
+          drush en bootstrap -y
+          drush vset theme_default bootstrap
+
+      - name: Generate CSS files for Shoreditch
+        working-directory: ${{ env.SITE_FOLDER }}/${{ env.CIVICRM_EXTENSIONS_DIR }}/org.civicrm.shoreditch
+        run: |
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm install
+          nvm use
+          npm install
+          npx gulp sass
+          drush cc all && drush cc civicrm
+
+      - name: Installing Shoreditch Companion Theme
+        working-directory: ${{ env.SITE_FOLDER }}/${{ env.DRUPAL_THEME_DIR }}
+        run: |
+          git clone https://github.com/compucorp/shoreditch-companion-d7-theme.git depth=1
+          drush en -y shoreditch_companion_d7_theme
+          drush vset civicrmtheme_theme_admin shoreditch_companion_d7_theme
+
+          drush sql-query "UPDATE block SET status = 0 WHERE theme='shoreditch_companion_d7_theme' AND module='civicrm' AND delta IN ('1', '2', '3', '4', '5');" -y
+          drush sql-query "UPDATE block SET status = 0 WHERE theme='shoreditch_companion_d7_theme' AND module='search' AND delta='form';" -y
+          drush sql-query "UPDATE block SET status = 0 WHERE theme='shoreditch_companion_d7_theme' AND module='system' AND delta IN ('navigation', 'powered-by');" -y
+
+          drush cc all && drush cc civicrm
+
+      - name: Install E2E Test Suite
+        run: |
+          git clone https://github.com/compucorp/cases-product-suite-e2e-tests.git --branch CPS-562-e2e-basic-setup
+          cd ${{ env.E2E_DIR }}
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm install
+          nvm use
+          npm install
+
+      - name: Setup data and site-config.json and run E2E tests
+        working-directory: ${{ env.E2E_DIR }}
+        run: |
+          cp site-config.json.sample site-config.json
+          sed -i 's+<url>+${{ env.SITE_URL }}+' site-config.json
+          sed -i 's+<path-to-site-root>+'"$GITHUB_WORKSPACE"'/${{ env.SITE_FOLDER }}/web+' site-config.json
+          sed -i 's+<site_name>+${{ env.SITE_NAME }}+' site-config.json
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm use
+          npx gulp test
+
+      - uses: actions/upload-artifact@v2
+        if: ${{ always() }}
         with:
-          repository: compucorp/compuclient
-          token: ${{ secrets.ACCESS_TOKEN }}
-
-      # - name: Download Compuclient
-      #   run: |
-      #     git clone https://github.com/compucorp/compuclient.git
-      #     cd ${{ env.E2E_DIR }}
-      #     git checkout 7.x-1.21
+          name: e2e-report
+          path: ${{ env.E2E_DIR }}/test-report

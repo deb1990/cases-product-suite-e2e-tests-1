@@ -1,5 +1,6 @@
 {
   "url": "<url>",
   "drush_alias": "",
-  "root": "<path-to-site-root>"
+  "root": "<path-to-site-root>",
+  "site_name": "<site_name>"
 }

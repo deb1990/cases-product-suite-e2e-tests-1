@@ -187,6 +187,7 @@ export default {
 
       if (!isUserPresent) {
         execSync(`drush user-create ${role.user} --password="${role.password}" --mail="${role.email}"`, execSyncOptions);
+        console.log(`"${role.user}" user created.`);
         role.roles.forEach((roleNameToAssign: string) => {
           execSync(`drush user-add-role "${roleNameToAssign}" ${role.user}`, execSyncOptions);
         });

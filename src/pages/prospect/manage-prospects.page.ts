@@ -18,6 +18,6 @@ export class ManageProspects extends ManageCasetypecategoryList {
    * @returns {string} page title
    */
   getPageTitle (): string {
-    return 'Manage Prospectings | CiviCase';
+    return `Manage Prospectings | ${this.siteName}`;
   }
 }
