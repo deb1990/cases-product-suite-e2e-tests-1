@@ -1,8 +1,8 @@
 import { execSync } from 'child_process';
 import Configs from './configs.service';
-import CiviApiResponse from '../interfaces/civi-response.interface';
-import UserRole from '../role/user-role.service';
-import CiviApiQuery from '../interfaces/civi-api-query.interface';
+import CiviApiResponse from '../../interfaces/civi-response.interface';
+import UserRole from './user-role.service';
+import CiviApiQuery from '../../interfaces/civi-api-query.interface';
 import CacheService from './cache.service';
 
 export default cvApiBatch;

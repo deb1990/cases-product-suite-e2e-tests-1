@@ -63,12 +63,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libxshmfence-dev
 
-      - name: Build Reference Drupal site (CiviCRM - ${{ github.event.inputs.civicrm_version }}
+      - name: Build Reference Drupal site -> CiviCRM - ${{ github.event.inputs.civicrm_version }}
         run: |
           civibuild create drupal-clean --civi-ver ${{ github.event.inputs.civicrm_version }} --cms-ver 7.74 --web-root $GITHUB_WORKSPACE/${{ env.SITE_FOLDER }} --url ${{ env.SITE_URL }}
           chmod -R 777 $GITHUB_WORKSPACE/${{ env.SITE_FOLDER }}
 
-      - name: Installing CiviCase - ${{ github.event.inputs.civicase_branch }}, CiviAwards - ${{ github.event.inputs.civiawards_branch }}, CiviProspects - ${{ github.event.inputs.civiprospect_branch }}, Shoreditch - ${{ github.event.inputs.shoreditch_branch }})
+      - name: Installing CiviCase - ${{ github.event.inputs.civicase_branch }}, CiviAwards - ${{ github.event.inputs.civiawards_branch }}, CiviProspects - ${{ github.event.inputs.civiprospect_branch }}, Shoreditch - ${{ github.event.inputs.shoreditch_branch }}
         working-directory: ${{ env.SITE_FOLDER }}/${{ env.CIVICRM_EXTENSIONS_DIR }}
         run: |
           git clone https://github.com/compucorp/uk.co.compucorp.civicase.git --branch ${{ github.event.inputs.civicase_branch }}

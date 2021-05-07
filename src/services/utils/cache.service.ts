@@ -1,5 +1,5 @@
-import CiviApiQuery from '../interfaces/civi-api-query.interface';
-import CiviApiResponse from '../interfaces/civi-response.interface';
+import CiviApiQuery from '../../interfaces/civi-api-query.interface';
+import CiviApiResponse from '../../interfaces/civi-response.interface';
 
 export default {
   cache: [],

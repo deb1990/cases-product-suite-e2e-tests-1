@@ -1,7 +1,7 @@
 import cvApiBatch from '../utils/cv-api.service';
-import CiviApiResponseValue from '../interfaces/civi-response-value.interface';
-import CiviApiParam from '../interfaces/civi-api-param.interface';
-import CiviApiQuery from '../interfaces/civi-api-query.interface';
+import CiviApiResponseValue from '../../interfaces/civi-response-value.interface';
+import CiviApiParam from '../../interfaces/civi-api-param.interface';
+import CiviApiQuery from '../../interfaces/civi-api-query.interface';
 
 /**
  * Base Entity Service
