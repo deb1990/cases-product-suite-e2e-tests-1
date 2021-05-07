@@ -1,6 +1,28 @@
 name: End to End Tests
 
-on: pull_request
+on:
+  workflow_dispatch:
+    inputs:
+      civicase_branch:
+        description: CiviCase Branch/Tag Name
+        default: master
+        required: true
+      civiawards_branch:
+        description: CiviAwards Branch/Tag Name
+        default: master
+        required: true
+      civiprospect_branch:
+        description: CiviProspect Branch/Tag Name
+        default: master
+        required: true
+      shoreditch_branch:
+        description: Shoreditch Branch/Tag Name
+        default: master
+        required: true
+      civicrm_version:
+        description: CiviCRM Version
+        default: 5.35 # change this to the current civicrm version in use
+        required: true
 
 jobs:
   run-backstop-tests:
@@ -41,18 +63,18 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libxshmfence-dev
 
-      - name: Build Drupal site
+      - name: Build Reference Drupal site (CiviCRM - ${{ github.event.inputs.civicrm_version }}
         run: |
-          civibuild create drupal-clean --civi-ver 5.35 --cms-ver 7.74 --web-root $GITHUB_WORKSPACE/${{ env.SITE_FOLDER }} --url ${{ env.SITE_URL }}
+          civibuild create drupal-clean --civi-ver ${{ github.event.inputs.civicrm_version }} --cms-ver 7.74 --web-root $GITHUB_WORKSPACE/${{ env.SITE_FOLDER }} --url ${{ env.SITE_URL }}
           chmod -R 777 $GITHUB_WORKSPACE/${{ env.SITE_FOLDER }}
 
-      - name: Installing CiviCase, CiviAwards, CiviProspect and Shoreditch
+      - name: Installing CiviCase - ${{ github.event.inputs.civicase_branch }}, CiviAwards - ${{ github.event.inputs.civiawards_branch }}, CiviProspects - ${{ github.event.inputs.civiprospect_branch }}, Shoreditch - ${{ github.event.inputs.shoreditch_branch }})
         working-directory: ${{ env.SITE_FOLDER }}/${{ env.CIVICRM_EXTENSIONS_DIR }}
         run: |
-          git clone https://github.com/compucorp/uk.co.compucorp.civicase.git
-          git clone https://github.com/compucorp/uk.co.compucorp.civiawards.git
-          git clone https://github.com/compucorp/uk.co.compucorp.civicrm.prospect.git
-          git clone https://github.com/civicrm/org.civicrm.shoreditch.git
+          git clone https://github.com/compucorp/uk.co.compucorp.civicase.git --branch ${{ github.event.inputs.civicase_branch }}
+          git clone https://github.com/compucorp/uk.co.compucorp.civiawards.git --branch ${{ github.event.inputs.civiawards_branch }}
+          git clone https://github.com/compucorp/uk.co.compucorp.civicrm.prospect.git --branch ${{ github.event.inputs.civiprospect_branch }}
+          git clone https://github.com/civicrm/org.civicrm.shoreditch.git --branch ${{ github.event.inputs.shoreditch_branch }}
           cv en shoreditch civicase civiawards prospect
           drush en civicrmtheme -y
           drush en bootstrap -y
