@@ -1,3 +1,6 @@
+// Jest has issues with Global Setup/TearDown Files written in TS
+// https://github.com/facebook/jest/issues/5164
+
 const execSync = require('child_process').execSync;
 const fs = require('fs');
 

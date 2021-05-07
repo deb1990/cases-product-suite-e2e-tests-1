@@ -1,3 +1,5 @@
+// Jest has issues with Environment Files written in TS
+// https://github.com/facebook/jest/issues/5164
 const NodeEnvironment = require('jest-environment-node');
 
 class E2ETestEnvironment extends NodeEnvironment {

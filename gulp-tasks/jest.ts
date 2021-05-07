@@ -1,5 +1,5 @@
 import * as jest from 'jest-cli';
-import ConfigService from '../src/services/utils/configs';
+import ConfigService from '../src/services/utils/configs.service';
 import BrowserService from '../src/services/utils/browser.service';
 import UserRole from '../src/services/role/user-role.service';
 import changeDrupalModuleState from '../src/services/utils/change-drupal-module-state.service';

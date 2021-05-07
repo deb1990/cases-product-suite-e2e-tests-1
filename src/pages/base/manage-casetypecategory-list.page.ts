@@ -1,6 +1,6 @@
 import { Page, Response } from 'playwright';
 import BrowserService from '../../services/utils/browser.service';
-import Configs from '../../services/utils/configs';
+import Configs from '../../services/utils/configs.service';
 import BasePage from './base.page';
 import OptionValueService from '../../services/entities/option-value.service';
 

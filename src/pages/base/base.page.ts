@@ -1,6 +1,6 @@
 import { Page, Response } from 'playwright';
 import BrowserService from '../../services/utils/browser.service';
-import Configs from '../../services/utils/configs';
+import Configs from '../../services/utils/configs.service';
 
 /**
  * Manage Entity Page

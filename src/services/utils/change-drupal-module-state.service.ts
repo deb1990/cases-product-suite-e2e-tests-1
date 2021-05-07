@@ -1,5 +1,5 @@
 import { execSync } from 'child_process';
-import Configs from '../utils/configs';
+import Configs from './configs.service';
 
 /**
  * Disables the session_limit drupal module.

@@ -3,7 +3,7 @@ import * as path from 'path';
 import { execSync } from 'child_process';
 import { chromium, ChromiumBrowser, ChromiumBrowserContext, Cookie, Page } from 'playwright';
 import ConfigFile from '../interfaces/config-file.interface';
-import Configs from './configs';
+import Configs from './configs.service';
 import UserRole from '../role/user-role.service';
 
 declare const global: {

@@ -1,5 +1,5 @@
 import { execSync } from 'child_process';
-import Configs from '../utils/configs';
+import Configs from '../utils/configs.service';
 import ConfigFile from '../interfaces/config-file.interface';
 
 /**
