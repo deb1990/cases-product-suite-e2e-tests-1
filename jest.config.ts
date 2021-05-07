@@ -6,8 +6,9 @@ const config: Config.InitialOptions = {
   transform: {
     '^.+\\.ts$': 'ts-jest'
   },
+  globalTeardown: '<rootDir>/gulp-tasks/jest-helper/global/teardown.js',
   testRunner: 'jest-circus/runner',
-  testEnvironment: './src/environments/e2e-test-environment.js',
+  testEnvironment: './gulp-tasks/jest-helper/environments/e2e-test-environment',
   reporters: [
     'default',
     ['./node_modules/jest-html-reporter', {

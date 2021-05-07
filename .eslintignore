@@ -1,3 +1,4 @@
 node_modules
 .eslintrc.js
-src/environments/e2e-test-environment.js
+gulp-tasks/jest-helper/environments/e2e-test-environment.js
+gulp-tasks/jest-helper/global/teardown.js
