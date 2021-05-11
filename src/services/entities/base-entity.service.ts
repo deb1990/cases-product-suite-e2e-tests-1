@@ -11,7 +11,7 @@ export default abstract class BaseEntityService {
   entityIds: string[];
 
   /**
-   * @param {string} entityName name of the entity
+   * @param entityName name of the entity
    */
   constructor (entityName: string) {
     this.entityName = entityName;
@@ -20,8 +20,8 @@ export default abstract class BaseEntityService {
   /**
    * Create Entity.
    *
-   * @param {CiviApiQuery} params parameters
-   * @returns {object[]} created entities
+   * @param params parameters
+   * @returns created entities
    */
   create (params: CiviApiParam[]): object[] {
     this.entityIds = [];
@@ -44,9 +44,9 @@ export default abstract class BaseEntityService {
   /**
    * Get Option Values.
    *
-   * @param {CiviApiParam[]} params parameters
-   * @param {boolean} useCache return values from cache if present
-   * @returns {CiviApiResponseValue[]} option values
+   * @param params parameters
+   * @param useCache return values from cache if present
+   * @returns option values
    */
   get (params: CiviApiParam, useCache: boolean): CiviApiResponseValue[] {
     return cvApiBatch([[this.entityName, 'get', params]], useCache)[0].values;

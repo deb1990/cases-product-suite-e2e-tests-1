@@ -9,33 +9,33 @@ export default abstract class BasePage {
   siteName: string = Configs.getSiteConfig().site_name;
 
   /**
-   * @param {BrowserService} browser browser object
+   * @param browser browser object
    */
   constructor (public browser: BrowserService) {
     this.browser = browser;
   }
 
   /**
-   * @param {Page} page page object
-   * @returns {Promise<Response|null>} promise
+   * @param page page object
+   * @returns promise
    */
   async navigate (page: Page): Promise<Response|null> {
     return await page.goto(Configs.getSiteConfig().url + this.getPageUrl());
   }
 
   /**
-   * @param {Page} page page object
-   * @returns {Promise<any>} promise
+   * @param page page object
+   * @returns promise
    */
   abstract waitForPageLoad (page: Page): Promise<any>;
 
   /**
-   * @returns {string} page title
+   * @returns page title
    */
   abstract getPageTitle (): string;
 
   /**
-   * @returns {string} page title
+   * @returns page title
    */
   abstract getPageUrl (): string;
 }

@@ -26,8 +26,8 @@ interface RolePermissionMap {
  */
 export default {
   /**
-   * @param {string} roleName role name
-   * @returns {string} cookie file name
+   * @param roleName role name
+   * @returns cookie file name
    */
   getCookieFileName (roleName: string): string {
     const user: string = this.getAllRoles().find((role: Role) => {
@@ -38,8 +38,8 @@ export default {
   },
 
   /**
-   * @param {string} roleName role name
-   * @returns {string} cookie file name
+   * @param roleName role name
+   * @returns cookie file name
    */
   getRoleName (roleName: string): string {
     return this.getAllRoles().find((role: Role) => {
@@ -48,7 +48,7 @@ export default {
   },
 
   /**
-   * @returns {string[]} list of all roles
+   * @returns list of all roles
    */
   getAllRoles (): Role[] {
     return [{
@@ -79,7 +79,7 @@ export default {
   },
 
   /**
-   * @returns {string[]} list of all permissions for the role
+   * @returns list of all permissions for the role
    */
   getRolesPermissionMap (): RolePermissionMap[] {
     return [{

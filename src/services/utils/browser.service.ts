@@ -21,7 +21,7 @@ export default class BrowserService {
   /**
    * Setup the browser.
    *
-   * @returns {Promise<ChromiumBrowser>} promise
+   * @returns promise
    */
   async setup (): Promise<ChromiumBrowser> {
     return await this.launchChrome();
@@ -30,7 +30,7 @@ export default class BrowserService {
   /**
    * Create New Page from a new Context.
    *
-   * @returns {Promise<Page>} promise
+   * @returns promise
    */
   async newPage (): Promise<Page> {
     this.context = await this.browser.newContext();
@@ -41,7 +41,7 @@ export default class BrowserService {
   /**
    * Closes the browser.
    *
-   * @returns {Promise<void>} promise
+   * @returns promise
    */
   async close (): Promise<void> {
     return await this.browser.close();
@@ -57,7 +57,7 @@ export default class BrowserService {
    * The cookie is then stored in a json file which is used by the BackstopJS scenarios
    * to log in
    *
-   * @returns {Promise<void>}
+   * @returns promise
    */
   async writeCookies (): Promise<void> {
     for (const roleObj of UserRole.getAllRoles()) {
@@ -83,8 +83,8 @@ export default class BrowserService {
   /**
    * Loads the saved cookies into the browser context.
    *
-   * @param {string} roleName role name
-   * @returns {Promise<void>}
+   * @param roleName role name
+   * @returns promise
    */
   async loginUsingCookiesAs (roleName: string): Promise<void> {
     let cookies: Cookie[] = [];
@@ -101,7 +101,7 @@ export default class BrowserService {
   /**
    * Launch Chrome.
    *
-   * @returns {Promise<ChromiumBrowser>} browser
+   * @returns browser
    */
   private async launchChrome (): Promise<ChromiumBrowser> {
     this.browser = await chromium.launch();
@@ -112,9 +112,9 @@ export default class BrowserService {
   /**
    * Set cookies.
    *
-   * @param {ChromiumBrowserContext} context context object
-   * @param {Cookie[]} cookies cookies array
-   * @returns {Promise<void>} promise
+   * @param context context object
+   * @param cookies cookies array
+   * @returns promise
    */
   private async setCookies (
     context: ChromiumBrowserContext,
@@ -123,7 +123,7 @@ export default class BrowserService {
   }
 
   /**
-   * @param {Page} page page object
+   * @param page page object
    */
   public async takeScreenshotWhenFailedAndClose (page: Page): Promise<any> {
     if (global.hasTestFailures) {

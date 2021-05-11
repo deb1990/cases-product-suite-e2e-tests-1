@@ -6,8 +6,8 @@ import Configs from './configs.service';
  * This is done to ensure Session Limit is not reached, as tests always
  * create a new session.
  *
- * @param {string} moduleName module name
- * @param {boolean} enable should enable or disable
+ * @param moduleName module name
+ * @param enable should enable or disable
  */
 export default function changeDrupalModuleState (moduleName: string, enable: boolean): void {
   const state = enable ? 'en' : 'dis';

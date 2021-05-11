@@ -6,14 +6,14 @@ import { ManageCasetypecategoryList } from '../base/manage-casetypecategory-list
  */
 export class ManageCases extends ManageCasetypecategoryList {
   /**
-   * @param {BrowserService} browser browser object
+   * @param browser browser object
    */
   constructor (public browser: BrowserService) {
     super(browser);
   }
 
   /**
-   * @returns {string} page title
+   * @returns page title
    */
   getPageTitle (): string {
     return `Manage Cases | ${this.siteName}`;

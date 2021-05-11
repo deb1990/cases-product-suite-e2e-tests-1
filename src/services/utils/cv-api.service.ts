@@ -11,9 +11,9 @@ export default cvApiBatch;
  * Executes multi calls to the `cv api` service and returns the response from
  * those calls in JSON format.
  *
- * @param {CiviApiQuery[]} queriesData a list of queries to pass to the `cv api:batch` service.
- * @param {boolean} useCache return values from cache if present
- * @returns {CiviApiResponse[]} response from the cv api.
+ * @param queriesData a list of queries to pass to the `cv api:batch` service.
+ * @param useCache return values from cache if present
+ * @returns response from the cv api.
  */
 function cvApiBatch (queriesData: CiviApiQuery[], useCache?: boolean): CiviApiResponse[] {
   if (useCache === true) {
@@ -35,8 +35,8 @@ function cvApiBatch (queriesData: CiviApiQuery[], useCache?: boolean): CiviApiRe
 }
 
 /**
- * @param {string} str string
- * @returns {string} escaped string
+ * @param str string
+ * @returns escaped string
  */
 function jsonEscape (str: string): string {
   return str.split('\\n').join('\\\\n');
@@ -45,7 +45,7 @@ function jsonEscape (str: string): string {
 /**
  * Throws an error if it finds any inside one of the `cv api` responses.
  *
- * @param {Array} responses the list of responses as returned by `cv api:batch`.
+ * @param responses the list of responses as returned by `cv api:batch`.
  */
 function checkAndThrowApiResponseErrors (responses: CiviApiResponse[]): void {
   responses.forEach((response: CiviApiResponse) => {

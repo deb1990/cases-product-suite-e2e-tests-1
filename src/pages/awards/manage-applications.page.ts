@@ -8,14 +8,14 @@ export class ManageApplications extends ManageCasetypecategoryList {
   caseTypeCategory = 'awards';
 
   /**
-   * @param {BrowserService} browser browser object
+   * @param {string} browser browser object
    */
   constructor (public browser: BrowserService) {
     super(browser);
   }
 
   /**
-   * @returns {string} page title
+   * @returns page title
    */
   getPageTitle (): string {
     return `Manage Applications | ${this.siteName}`;

@@ -43,7 +43,7 @@ describe('Case Page Title', function () {
   });
 
   /**
-   * @returns {object[]} case type ids
+   * @returns case type ids
    */
   function setupCaseTypeIds (): object[] {
     const definition = {

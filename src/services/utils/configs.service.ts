@@ -9,14 +9,14 @@ export default {
   siteConfig: 'site-config.json',
   siteConfigSample: 'site-config.json.sample',
   /**
-   * @returns {ConfigFile} config file
+   * @returns config file
    */
   getSiteConfig (): ConfigFile {
     return JSON.parse(fs.readFileSync(this.siteConfig).toString());
   },
   /**
-   * @param {string} roleName role name
-   * @returns {string} cookie path
+   * @param roleName role name
+   * @returns cookie path
    */
   getCookiePathFor (roleName: string): string {
     return path.join(this.cookieDir, UserRole.getCookieFileName(roleName));

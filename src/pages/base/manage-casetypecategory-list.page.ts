@@ -30,20 +30,20 @@ export abstract class ManageCasetypecategoryList extends BasePage {
   }
 
   /**
-   * @param {Page} page page object
-   * @returns {Promise<any>} promise
+   * @param page page object
+   * @returns promise
    */
   async waitForPageLoad (page: Page): Promise<any> {
     return await page.waitForSelector(this.selectors.otherCriteriaButton);
   }
 
   /**
-   * @returns {string} page title
+   * @returns page title
    */
   abstract getPageTitle (): string;
 
   /**
-   * @returns {string} case type category value
+   * @returns case type category value
    */
   private getCaseTypeCategoryValue (): string {
     const caseTypeCategoryValue = this.OptionValue.get({
@@ -56,7 +56,7 @@ export abstract class ManageCasetypecategoryList extends BasePage {
   }
 
   /**
-   * @returns {string} page title
+   * @returns page title
    */
   getPageUrl (): string {
     return `/civicrm/case/a/?case_type_category=${this.getCaseTypeCategoryValue()}#/case/list?cf=%7B%22case_type_category%22:%22${this.getCaseTypeCategoryValue()}%22%7D`;

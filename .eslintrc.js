@@ -10,6 +10,8 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/semi': ['error', 'always'],
+    'jsdoc/require-param-type': 0,
+    'jsdoc/require-returns-type': 0,
     'jsdoc/require-jsdoc': [1, {
       contexts: [
         'ClassDeclaration', 'FunctionExpression', 'FunctionDeclaration',

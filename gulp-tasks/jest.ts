@@ -8,7 +8,7 @@ import cleanUpReports from '../src/services/utils/clean-up-reports.service';
 export default jestTask;
 
 /**
- * @returns {Promise<void>} promise
+ * @returns promise
  */
 async function jestTask (): Promise<void> {
   ConfigService.touchSiteConfigFile();
