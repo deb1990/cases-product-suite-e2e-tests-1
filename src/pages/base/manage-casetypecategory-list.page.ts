@@ -1,5 +1,4 @@
 import { Page, Response } from 'playwright';
-import BrowserService from '../../services/utils/browser.service';
 import Configs from '../../services/utils/configs.service';
 import BasePage from './base.page';
 import OptionValueService from '../../services/entities/option-value.service';
@@ -13,13 +12,6 @@ export abstract class ManageCasetypecategoryList extends BasePage {
   selectors = {
     otherCriteriaButton: '.civicase__case-filter-panel__button'
   };
-
-  /**
-   * @param {BrowserService} browser browser object
-   */
-  constructor (public browser: BrowserService) {
-    super(browser);
-  }
 
   /**
    * @param {Page} page page object
@@ -36,11 +28,6 @@ export abstract class ManageCasetypecategoryList extends BasePage {
   async waitForPageLoad (page: Page): Promise<any> {
     return await page.waitForSelector(this.selectors.otherCriteriaButton);
   }
-
-  /**
-   * @returns page title
-   */
-  abstract getPageTitle (): string;
 
   /**
    * @returns case type category value
