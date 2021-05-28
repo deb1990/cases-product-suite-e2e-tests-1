@@ -105,7 +105,7 @@ jobs:
 
       - name: Install E2E Test Suite
         run: |
-          git clone https://github.com/compucorp/cases-product-suite-e2e-tests.git --branch CPS-562-e2e-basic-setup
+          git clone https://github.com/compucorp/cases-product-suite-e2e-tests.git --branch master
           cd ${{ env.E2E_DIR }}
           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
           nvm install
