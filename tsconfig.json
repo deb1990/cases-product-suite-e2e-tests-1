@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "sourceMap": false,
+    "allowJs": false,
+    "declaration": true,
+    "baseUrl": "./"
+  }
+}

@@ -1,0 +1,4 @@
+node_modules
+.eslintrc.js
+gulp-tasks/jest-helper/environments/e2e-test-environment.js
+gulp-tasks/jest-helper/global/teardown.js
