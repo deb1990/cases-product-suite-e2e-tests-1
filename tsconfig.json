@@ -6,6 +6,7 @@
     "strictNullChecks": true,
     "sourceMap": false,
     "allowJs": false,
+    "target": "ES6",
     "declaration": true,
     "baseUrl": "./"
   }

@@ -1,50 +1,36 @@
-import { Page } from 'playwright';
-import BrowserService from '../../../src/services/utils/browser.service';
 import { ManageApplications } from '../../../src/pages/awards/manage-applications.page';
 
+import JestGlobal from '../../../src/interfaces/jest-global.interface';
+
+declare const global: JestGlobal;
+
 describe('Award Page Title', function () {
-  let page: Page;
   let manageApplications: ManageApplications;
-  const browser = new BrowserService();
-
-  beforeAll(async () => {
-    await browser.setup();
-  });
-
-  afterAll(async () => {
-    await browser.close();
-  });
 
   beforeEach(async () => {
-    page = await browser.newPage();
-
-    manageApplications = new ManageApplications(browser);
-  });
-
-  afterEach(async () => {
-    await browser.takeScreenshotWhenFailedAndClose(page);
+    manageApplications = new ManageApplications(global.browser);
   });
 
   describe('as admin user', function () {
     beforeEach(async () => {
-      await browser.loginUsingCookiesAs('admin');
-      await manageApplications.navigate(page);
-      await manageApplications.waitForPageLoad(page);
+      await global.browser.loginUsingCookiesAs('admin');
+      await manageApplications.navigate(global.page);
+      await manageApplications.waitForPageLoad(global.page);
     });
 
     it('should show manage applications page title', async () => {
-      expect(await page.title()).toBe(manageApplications.getPageTitle());
+      expect(await global.page.title()).toBe(manageApplications.getPageTitle());
     });
   });
 
   describe('as case user', function () {
     beforeEach(async () => {
-      await browser.loginUsingCookiesAs('case_user');
-      await manageApplications.navigate(page);
+      await global.browser.loginUsingCookiesAs('case_user');
+      await manageApplications.navigate(global.page);
     });
 
     it('should not have access to manage applications page', async () => {
-      expect(await page.title()).not.toBe(manageApplications.getPageTitle());
+      expect(await global.page.title()).not.toBe(manageApplications.getPageTitle());
     });
   });
 });

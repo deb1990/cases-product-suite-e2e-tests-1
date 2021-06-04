@@ -22,5 +22,5 @@ async function jestTask (): Promise<void> {
 
   await browser.writeCookies();
 
-  await jest.run(['--runInBand']);
+  await jest.run(['--runInBand', '--no-cache']);
 }
