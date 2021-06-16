@@ -5,6 +5,8 @@ import BrowserService from '../../../src/services/utils/browser.service';
 import TestLinkService from '../../../src/services/utils/test-link.service';
 import JestGlobal from '../../../src/interfaces/jest-global.interface';
 
+const date = new Date();
+
 /**
  * Custom Jest Test environment.
  */
@@ -28,7 +30,9 @@ export default class E2ETestEnvironment extends NodeEnvironment {
    * @param event event
    */
   async handleTestEvent (event: Circus.Event): Promise<any> {
-    if (event.name === 'run_describe_start' && (event.describeBlock.parent?.name === 'ROOT_DESCRIBE_BLOCK')) {
+    if (event.name === 'setup') {
+      await this.beforeAllTests();
+    } else if (event.name === 'run_describe_start' && (event.describeBlock.parent?.name === 'ROOT_DESCRIBE_BLOCK')) {
       await this.beforeAllTestsOfEachSpecFile();
     } else if (event.name === 'run_describe_finish' && (event.describeBlock.parent?.name === 'ROOT_DESCRIBE_BLOCK')) {
       await this.afterAllTestsOfEachSpecFile();
@@ -71,7 +75,7 @@ export default class E2ETestEnvironment extends NodeEnvironment {
    */
   async beforeAllTests (): Promise<void> {
     await TestLinkService.init();
-    await TestLinkService.createNewBuild(Dayjs());
+    await TestLinkService.createNewBuild(Dayjs(date));
   }
 
   /**

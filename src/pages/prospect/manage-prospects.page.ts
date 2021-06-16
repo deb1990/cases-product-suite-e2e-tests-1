@@ -10,6 +10,6 @@ export class ManageProspects extends ManageCasetypecategoryList {
    * @returns page title
    */
   getPageTitle (): string {
-    return `Manage Prospectings | ${this.siteName}`;
+    return `Manage Prospects | ${this.siteName}`;
   }
 }
