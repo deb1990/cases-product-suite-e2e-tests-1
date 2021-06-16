@@ -2,6 +2,13 @@ import { TestLink } from 'testlink-xmlrpc';
 import { Dayjs } from 'dayjs';
 import xmlrpc from 'xmlrpc';
 
+declare const process: {
+  env: {
+    TEST_LINK_USER: string
+    TEST_LINK_PASS: string
+  }
+};
+
 /**
  * Test Link Service Class
  */
@@ -25,17 +32,22 @@ export default {
       autoConnect: false
     });
 
-    // the 'testlink-xmlrpc' module has a bug, it does not set https,
-    // hence setting it manually
+    if (process.env.TEST_LINK_USER === '' || process.env.TEST_LINK_PASS === '') {
+      throw new Error('TEST_LINK_USER & TEST_LINK_PASS environment variables are not set.');
+    }
+
     this.testlink.rpcClient = xmlrpc.createClient({
       host: this.testlink.host,
       port: this.testlink.port,
       path: this.testlink.rpcPath,
       basic_auth: {
-        user: 'testlink',
-        pass: 'FIRlAcnQy1FXeM3'
+        user: process.env.TEST_LINK_USER,
+        pass: process.env.TEST_LINK_PASS
       }
     });
+
+    // the 'testlink-xmlrpc' module has a bug, it does not set https,
+    // hence setting it manually
     this.testlink.rpcClient.isSecure = this.secure;
 
     await this.getTestPlan();
@@ -93,6 +105,9 @@ export default {
    */
   async reportTestCase (testLinkID: string, isPassed: boolean): Promise<any> {
     if (testLinkID !== '') {
+      const status = isPassed ? 'Passed' : 'Failed';
+      console.log(`Testcase ${testLinkID} marked as ${status} in Testlink.`);
+
       return this.testlink.reportTCResult({
         testcaseexternalid: testLinkID,
         testplanid: this.testPlan.id,
