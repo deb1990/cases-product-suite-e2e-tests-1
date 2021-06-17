@@ -32,7 +32,7 @@ export default {
       autoConnect: false
     });
 
-    if (process.env.TEST_LINK_USER === '' || process.env.TEST_LINK_PASS === '') {
+    if (process.env.TEST_LINK_USER === undefined || process.env.TEST_LINK_PASS === undefined) {
       throw new Error('TEST_LINK_USER & TEST_LINK_PASS environment variables are not set.');
     }
 
@@ -116,5 +116,19 @@ export default {
         steps: []
       });
     }
+  },
+
+  /**
+   * Get the Test link ID.
+   *
+   * @param name name of the test
+   * @returns test link id
+   *
+   * @example
+   *  // getTestLinkID('EXT-1234::Should open popup')
+   *  // returns 'EXT-1234'
+   */
+  getTestLinkID (name: string): string {
+    return name.substr(0, name.indexOf('::'));
   }
 };

@@ -3,6 +3,7 @@ import Dayjs from 'dayjs';
 import type { Circus, Config, Global } from '@jest/types';
 import BrowserService from '../../../src/services/utils/browser.service';
 import TestLinkService from '../../../src/services/utils/test-link.service';
+import TestHelperService from '../../../src/services/utils/test-helper.service';
 import JestGlobal from '../../../src/interfaces/jest-global.interface';
 
 const date = new Date();
@@ -44,33 +45,6 @@ export default class E2ETestEnvironment extends NodeEnvironment {
   }
 
   /**
-   * Get Test link ID.
-   *
-   * @param name name of the test
-   * @returns test link id
-   */
-  getTestLinkID (name: string): string {
-    return name.substr(0, name.indexOf('::'));
-  }
-
-  /**
-   * Get the full name of the test.
-   *
-   * @param test test object
-   * @param name name of the test
-   * @returns list of test names
-   */
-  getTestName (test: Circus.TestEntry | Circus.DescribeBlock, name: Circus.TestName[]): Circus.TestName[] {
-    name.push(test.name);
-
-    if (test.parent !== undefined) {
-      this.getTestName(test.parent, name);
-    }
-
-    return name;
-  }
-
-  /**
    * Common setup steps for all tests, runs before all the tests.
    */
   async beforeAllTests (): Promise<void> {
@@ -99,7 +73,7 @@ export default class E2ETestEnvironment extends NodeEnvironment {
    * @param test test object
    */
   async beforeEachTest (test: Circus.TestEntry): Promise<void> {
-    this.testLinkID = this.getTestLinkID(test.name);
+    this.testLinkID = TestLinkService.getTestLinkID(test.name);
     this.global.page = await this.global.browser.newPage();
   }
 
@@ -113,7 +87,7 @@ export default class E2ETestEnvironment extends NodeEnvironment {
 
     if (test.errors.length > 0) {
       hasTestFailures = true;
-      const testName = this.getTestName(test, []).reverse();
+      const testName = TestHelperService.getTestName(test, []).reverse();
       testName.shift();
 
       const failureScreenshotFileName = testName.join('_').replace(/ /g, '_');
