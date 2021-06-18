@@ -8,7 +8,7 @@ const config: Config.InitialOptions = {
   },
   globalTeardown: '<rootDir>/gulp-tasks/jest-helper/global/teardown.js',
   testRunner: 'jest-circus/runner',
-  testEnvironment: './gulp-tasks/jest-helper/environments/e2e-test-environment',
+  testEnvironment: './gulp-tasks/jest-helper/environments/e2e-test-environment.ts',
   reporters: [
     'default',
     ['./node_modules/jest-html-reporter', {

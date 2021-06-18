@@ -6,11 +6,6 @@ import ConfigFile from '../../interfaces/config-file.interface';
 import Configs from './configs.service';
 import UserRole from './user-role.service';
 
-declare const global: {
-  hasTestFailures: boolean
-  failureScreenshotFileName: string
-};
-
 /**
  * Browser Service Class
  */
@@ -124,11 +119,13 @@ export default class BrowserService {
 
   /**
    * @param page page object
+   * @param hasTestFailures whether test has failed
+   * @param failureScreenshotFileName screenshot file name
    */
-  public async takeScreenshotWhenFailedAndClose (page: Page): Promise<any> {
-    if (global.hasTestFailures) {
+  public async takeScreenshotWhenFailedAndClose (page: Page, hasTestFailures: boolean, failureScreenshotFileName: string): Promise<any> {
+    if (hasTestFailures) {
       await page.screenshot({
-        path: `./test-report/${global.failureScreenshotFileName}.png`,
+        path: `./test-report/${failureScreenshotFileName}.png`,
         fullPage: true
       });
     }

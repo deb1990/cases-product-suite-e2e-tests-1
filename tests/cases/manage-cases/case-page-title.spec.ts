@@ -1,44 +1,33 @@
-import { Page } from 'playwright';
-import BrowserService from '../../../src/services/utils/browser.service';
 import { ManageCases } from '../../../src/pages/cases/manage-case.page';
 import CaseTypeService from '../../../src/services/entities/case-type.service';
+import JestGlobal from '../../../src/interfaces/jest-global.interface';
+
+declare const global: JestGlobal;
 
 describe('Case Page Title', function () {
-  let page: Page;
   let manageCases: ManageCases;
-  const browser = new BrowserService();
+
   const CaseType = new CaseTypeService();
 
-  beforeAll(async () => {
-    await browser.setup();
-  });
-
-  afterAll(async () => {
-    await browser.close();
-  });
-
   beforeEach(async () => {
-    page = await browser.newPage();
-
-    manageCases = new ManageCases(browser);
+    manageCases = new ManageCases(global.browser);
 
     setupCaseTypeIds();
   });
 
   afterEach(async () => {
-    await browser.takeScreenshotWhenFailedAndClose(page);
     CaseType.cleanUp();
   });
 
   describe('as admin user', function () {
     beforeEach(async () => {
-      await browser.loginUsingCookiesAs('admin');
-      await manageCases.navigate(page);
-      await manageCases.waitForPageLoad(page);
+      await global.browser.loginUsingCookiesAs('admin');
+      await manageCases.navigate(global.page);
+      await manageCases.waitForPageLoad(global.page);
     });
 
-    it('should show manage cases page title', async () => {
-      expect(await page.title()).toBe(manageCases.getPageTitle());
+    it('EXT-1295::should show manage cases page title', async () => {
+      expect(await global.page.title()).toBe(manageCases.getPageTitle());
     });
   });
 

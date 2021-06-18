@@ -117,16 +117,26 @@ describe('...', function () {
 ### Test Report
 After all the tests are executed, test report is generated inside `test-report` folder using `jest-html-reporter`.
 Also for every failed test case, a screenshot of the browser is saved under the same `test-report` folder, which will be helpful to debugg the error.
-To generate this screenshot, a custom environment for Jest has been created at `gulp-tasks/jest-helper/environments/e2e-test-environment.js`.
-Which exposes a variable called `hasTestFailures` to denote failed tests, and inside every test, it can be accessed like the following
+To generate this screenshot, a custom environment for Jest has been created at `gulp-tasks/jest-helper/environments/e2e-test-environment.ts`.
+Which takes a screenshot for every failed test cases.
+
+### Testlink Integration
+The End to End test suite is integrated with [Testlink](https://testlink.cc-infra.tools/).
+Before running the test suite, a new Build is created in Test Link, with the name `E2E Build - DD-MON-YEAR-HR-MM-SS`.
+
+And all the test cases' status get updated for the same build.
+To link a test case in Jest with a specific Testlink, the following pattern needs to be followed
 ```ts
-afterEach(async () => {
-  if (global.hasTestFailures) {
-      // do something
-  };
+// Pattern
+it('<external-id-from-testlink>::<test case description>', async () => {
+  ...
+});
+
+// Example Usage
+it('EXT-1234::should login successfully', async () => {
+  ...
 });
 ```
-Currently `Browser.takeScreenshotWhenFailedAndClose()` function takes care of taking the screenshot and closing the browser. But more logic can be added as per need.
 
 ## Linters
 This repository uses `eslint-config-standard-with-typescript` and `eslint-plugin-jsdoc` to lint the Typescript files.

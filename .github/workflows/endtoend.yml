@@ -25,7 +25,7 @@ on:
         required: true
 
 jobs:
-  run-backstop-tests:
+  run-e2e-tests:
     runs-on: ubuntu-latest
     container: compucorp/civicrm-buildkit:1.1.0-php7.2-chrome
 
@@ -37,6 +37,8 @@ jobs:
       E2E_DIR: cases-product-suite-e2e-tests
       DRUPAL_THEME_DIR: web/sites/all/themes
       SITE_NAME: drupal-clean
+      TEST_LINK_USER: ${{ secrets.TEST_LINK_USER }}
+      TEST_LINK_PASS: ${{ secrets.TEST_LINK_PASS }}
 
     services:
       mysql:
