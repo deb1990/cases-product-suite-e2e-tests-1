@@ -10,7 +10,7 @@ export abstract class ManageCasetypecategoryList extends BasePage {
   caseTypeCategory = 'cases';
   OptionValue = new OptionValueService();
   selectors = {
-    otherCriteriaButton: '.civicase__case-filter-panel__button'
+    emptyCaseSelect: '.civicase__case-list .empty-label'
   };
 
   /**
@@ -26,7 +26,21 @@ export abstract class ManageCasetypecategoryList extends BasePage {
    * @returns promise
    */
   async waitForPageLoad (page: Page): Promise<any> {
-    return await page.waitForSelector(this.selectors.otherCriteriaButton);
+    await page.waitForSelector('.civicase__case-placeholder-row', { state: 'hidden' });
+  }
+
+  /**
+   * @param page page object
+   * @param numberOfCases number of cases to select
+   * @param actionName name of the bulk action to run
+   * @returns promise
+   */
+  async enableBulkActionFor (page: Page, numberOfCases: 'all' | 'visible' | 'none', actionName: string): Promise<any> {
+    const ImportedClass = await import(`./case-bulk-action/actions/${actionName}-case-bulk-action.page`);
+    const constructorName = Object.keys(ImportedClass)[0];
+    const caseBulkAction = new ImportedClass[constructorName]();
+    await caseBulkAction.doAction(page, numberOfCases);
+    await this.waitForPageLoad(page);
   }
 
   /**
